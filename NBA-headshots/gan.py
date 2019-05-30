@@ -1,13 +1,13 @@
 from __future__ import print_function, division
-import tensorflow
-from tensorflow import keras
+#import tensorflow
+#from tensorflow import keras
 
-from keras.layers import Input, Dense, Reshape, Flatten, Dropout
-from keras.layers import BatchNormalization, Activation, ZeroPadding2D
-from keras.layers.advanced_activations import LeakyReLU
-from keras.layers.convolutional import UpSampling2D, Conv2D
-from keras.models import Sequential, Model
-from keras.optimizers import Adam
+from tensorflow.python.keras.layers import Input, Dense, Reshape, Flatten, Dropout
+from tensorflow.python.keras.layers import BatchNormalization, Activation, ZeroPadding2D
+from tensorflow.python.keras.layers.advanced_activations import LeakyReLU
+from tensorflow.python.keras.layers.convolutional import UpSampling2D, Conv2D
+from tensorflow.python.keras.models import Sequential, Model
+from tensorflow.python.keras.optimizers import Adam
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -41,7 +41,7 @@ class GAN():
         img = self.generator(z)
 
         # For the combined model we will only train the generator
-        self.discriminator.trainable = True
+        self.discriminator.trainable = False
 
         # The discriminator takes generated images as input and determines validity
         validity = self.discriminator(img)
@@ -56,13 +56,13 @@ class GAN():
 
         model = Sequential()
 
-        model.add(Dense(256, input_dim=self.latent_dim))
-        model.add(LeakyReLU(alpha=0.2))
-        model.add(BatchNormalization(momentum=0.8))
-        model.add(Dense(512))
+        model.add(Dense(512, input_dim=self.latent_dim))
         model.add(LeakyReLU(alpha=0.2))
         model.add(BatchNormalization(momentum=0.8))
         model.add(Dense(1024))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(BatchNormalization(momentum=0.8))
+        model.add(Dense(2048))
         model.add(LeakyReLU(alpha=0.2))
         model.add(BatchNormalization(momentum=0.8))
         model.add(Dense(np.prod(self.img_shape), activation='tanh'))
@@ -94,6 +94,7 @@ class GAN():
 
     def train(self, epochs, batch_size=128, sample_interval=50):
 
+        mystr = ""
         # Load the dataset
         X_train = np.load(os.getcwd()+"/pickles/train_data.npy")
 
@@ -136,10 +137,14 @@ class GAN():
 
             # Plot the progress
             print ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]" % (epoch, d_loss[0], 100*d_loss[1], g_loss))
+            mystr += ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]\n" % (epoch, d_loss[0], 100*d_loss[1], g_loss))
+
 
             # If at save interval => save generated image samples
             if epoch % sample_interval == 0:
                 self.sample_images(epoch)
+        with open("analytics.txt","w") as f:
+            f.write(mystr)
 
     def sample_images(self, epoch):
         r, c = 5, 5
