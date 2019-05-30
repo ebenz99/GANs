@@ -3,14 +3,14 @@ import numpy as np
 
 
 
-numgraphed = 10000
+numgraphed = 4000
 
 idx = 0
 darr = np.ndarray(shape=(numgraphed), dtype = "float")
 idxs = np.ndarray(shape=(numgraphed), dtype = "float")
 
 
-with open("accuracy.txt","r") as f:
+with open("analytics.txt","r") as f:
 	for line in f:
 		first = line.split(",")[0]
 		number = first.split(" ")[-1]
