@@ -1,6 +1,5 @@
 from __future__ import print_function, division
 
-from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D
 from keras.layers.advanced_activations import LeakyReLU
@@ -9,15 +8,17 @@ from keras.models import Sequential, Model
 from keras.optimizers import Adam
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 import sys
+import os
 
 import numpy as np
 
 class GAN():
     def __init__(self):
-        self.img_rows = 28
-        self.img_cols = 28
+        self.img_rows = 80
+        self.img_cols = 100
         self.channels = 1
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
         self.latent_dim = 100
@@ -92,10 +93,7 @@ class GAN():
     def train(self, epochs, batch_size=128, sample_interval=50):
 
         # Load the dataset
-        (X_train, _), (_, _) = mnist.load_data()
-        print(X_train.shape)
-        print(type(X_train))
-        exit(2)
+        X_train = np.load(os.getcwd()+"/pickles/train_data.npy")
 
         # Rescale -1 to 1
         X_train = X_train / 127.5 - 1.
