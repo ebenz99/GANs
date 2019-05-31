@@ -3,7 +3,7 @@ import numpy as np
 
 
 
-numgraphed = 30000
+numgraphed = 4000
 
 idx = 0
 darr = np.ndarray(shape=(numgraphed), dtype = "float")
