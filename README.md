@@ -12,8 +12,8 @@ First things first, if you're doing ML, you're probably going to need a training
 
 ## NBA-headshots
 
-Pretty straightforward. Credit to github user @mroeschke for getting every NBA player headshot from 2015-2016 somehow. All that was needed for prepping them was making them mono-channel and resizing them so the input layer wasn't large enough to slow things down too much. At around epoch 2400, a more defined headshot silhouette begins to take shape. Discovery of facial features probably requires a GPU or a lot more time than I'm willing to train this with my computer.
+Pretty straightforward. Credit to github user @mroeschke for getting every NBA player headshot from 2015-2016 somehow. All that was needed for prepping them was making them mono-channel and resizing them so the input layer wasn't large enough to slow things down too much. At around epoch 2400, a more defined headshot silhouette begins to take shape.
 
-## Dinosaurs
+## Pokemon
 
-This is a little more ambitious. There is no dinosaur image dataset, so I'm really going to be putting the power of GANs to the test.
+This should be more of a challenge for the GAN, as I'm going from mono-channel to four-channel data
